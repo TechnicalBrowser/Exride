@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EXRIDE</title>
+  <style>
+    :root{
+      --bg:#0b0b0c;
+      --panel:#0f1113;
+      --muted:#9aa3ad;
+      --accent:#3385ff;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.04);
+      --card-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+
+    /* Reset */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #e8eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position:fixed;
+      top:0; left:0; right:0;
+      height:72px;
+      display:flex;
+      align-items:center;
+      gap:24px;
+      padding:0 34px;
+      z-index:60;
+      backdrop-filter: blur(6px) saturate(120%);
+      background: linear-gradient(180deg, rgba(11,11,12,0.36), rgba(11,11,12,0.12));
+      transition: height .28s ease, backdrop-filter .28s ease, box-shadow .28s ease;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+    }
+    .navbar.shrink{ height:56px; backdrop-filter: blur(8px) saturate(140%); }
+
+    .nav-left{ display:flex; align-items:center; gap:18px; }
+    .nav-left img{ height:34px; width:auto; display:block; }
+    .nav-links{ display:flex; gap:18px; align-items:center; margin-left:6px; }
+    .nav-links a{ text-decoration:none; color:var(--muted); font-size:15px; font-weight:600; letter-spacing:.2px; padding:8px; border-radius:6px; transition: color .18s, background .18s; }
+    .nav-links a:hover{ color:#fff; background:rgba(255,255,255,0.02); }
+
+    .nav-right{ margin-left:auto; display:flex; gap:12px; align-items:center; }
+
+    .donate-btn{
+      background: linear-gradient(90deg, #4b8bff, #6e52ff);
+      color:white;
+      font-weight:700;
+      border-radius:10px;
+      padding:8px 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: 0 6px 20px rgba(79,99,255,0.18);
+      transform: translateZ(0);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .donate-btn:hover{ transform: translateY(-3px); box-shadow: 0 18px 40px rgba(79,99,255,0.20); }
+
+    /* HERO */
+    .hero{
+      margin-top:72px;
+      min-height:85vh;
+      display:flex;
+      align-items:center;
+      padding:72px 6vw;
+      position:relative;
+      overflow:hidden;
+      background-color:#000;
+    }
+
+    /* Parallax background layer */
+    .hero__bg{
+      position:absolute;
+      inset:0;
+      background-image: url("https://pbs.twimg.com/media/FytqLFqWcAAHTH1.jpg:large");
+      background-size:cover;
+      background-position:center center;
+      filter: saturate(.95) contrast(.98) brightness(.9);
+      transform: translateZ(0) scale(1.03);
+      z-index:0;
+      will-change: transform;
+    }
+
+    /* dark gradient overlay to get deep-black theme */
+    .hero__overlay{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, rgba(3,6,10,0.85) 0%, rgba(3,6,10,0.45) 55%, rgba(3,6,10,0.22) 100%);
+      z-index:1;
+    }
+
+    .hero__content{
+      position:relative;
+      z-index:2;
+      max-width:940px;
+      color: #fff;
+      align-self:flex-start;
+      padding-top:48px;
+      opacity:0;
+      transform: translateY(18px);
+      animation: heroIn .9s cubic-bezier(.2,.9,.2,1) forwards .18s;
+    }
+
+    @keyframes heroIn{
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .hero__title{
+      font-size:72px;
+      margin:0 0 6px 0;
+      line-height:0.92;
+      font-weight:800;
+      text-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      letter-spacing:-1px;
+    }
+    .hero__subtitle{
+      margin:8px 0 20px 0;
+      color: #d7e3ee;
+      font-size:18px;
+      font-weight:500;
+    }
+
+    .hero__cta{ display:flex; gap:12px; align-items:center; }
+    .btn{
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding:12px 18px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:700;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+      backdrop-filter: blur(6px);
+    }
+    .btn--muted{ background: rgba(255,255,255,0.06); color:#dfe8f3; }
+    .btn:hover{ transform: translateY(-3px); background: rgba(255,255,255,0.14); box-shadow: 0 14px 40px rgba(2,6,23,0.6); }
+
+    /* subtle ripple for click feel */
+    .btn:active{ transform: translateY(-1px) scale(.997); }
+
+    /* LATEST NEWS (cards) */
+    .section{
+      background: linear-gradient(180deg, rgba(6,6,6,0.96), rgba(6,6,6,0.98));
+      padding: 56px 6vw 120px;
+    }
+
+    .section .wrap{
+      max-width:1200px;
+      margin:0 auto;
+    }
+
+    .section h2{
+      margin:0 0 22px 0;
+      font-size:24px;
+      color: #cbd6e2;
+      font-weight:700;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    /* responsive fallback */
+    @media (max-width:980px){
+      .hero__title{ font-size:48px; }
+      .cards{ grid-template-columns: 1fr; }
+      .hero{ padding:40px 4vw; min-height:72vh; }
+      .nav-links{ display:none; }
+    }
+    @media (max-width:600px){
+      .hero__title{ font-size:34px; }
+      .navbar{ padding:0 14px; }
+      .hero{ padding:28px 3vw; min-height:64vh; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow: var(--card-shadow);
+      transform: translateY(26px);
+      opacity:0;
+      transition: transform .45s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease;
+      will-change: transform, opacity;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .card.visible{ transform: translateY(0); opacity:1; }
+
+    .card .thumb{
+      display:block;
+      width:100%;
+      aspect-ratio: 16/9;
+      object-fit:cover;
+      display:block;
+      background:#0a0a0a;
+    }
+
+    .card.small .thumb{ aspect-ratio: 16/9; }
+
+    .card .meta{
+      padding:12px 16px 18px 16px;
+      font-size:13px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.9px;
+      font-weight:700;
+    }
+
+    .card:hover{ transform: translateY(-8px) scale(1.01); box-shadow: 0 30px 60px rgba(2,6,23,0.7); }
+
+    /* micro animations */
+    .fade-in-up{ opacity:0; transform:translateY(18px); animation: fadeUp .7s cubic-bezier(.2,.9,.2,1) forwards; }
+    @keyframes fadeUp{ to{ opacity:1; transform:translateY(0);} }
+
+    /* small decorative watermark bottom-right on hero */
+    .hero .watermark{
+      position:absolute;
+      right:18px;
+      bottom:18px;
+      z-index:3;
+      color: rgba(255,255,255,0.14);
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:8px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <header class="navbar" id="navbar">
+    <div class="nav-left">
+      <img src="logo.png" alt="EXRIDE logo" />
+      <nav class="nav-links" aria-label="main">
+        <a href="#">Features</a>
+        <a href="#">Download</a>
+        <a href="#">Support</a>
+        <a href="#">Get Involved</a>
+        <a href="#">About</a>
+        <a href="#">Jobs</a>
+        <a href="#">Store</a>
+      </nav>
+    </div>
+
+    <div class="nav-right">
+      <a class="donate-btn" href="#" aria-label="Donate"><span style="font-size:14px">❤</span> Donate</a>
+    </div>
+  </header>
+
+  <!-- HERO with parallax bg -->
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero__bg" id="heroBg" aria-hidden="true"></div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <h1 class="hero__title">EXRIDE 3.0.1</h1>
+        <div class="hero__subtitle">Your new best friend.</div>
+
+        <div class="hero__cta">
+          <a class="btn" href="exshop.html" id="whatsNew">ExShop</a>
+          <!-- Download: botón limpio SIN textos ni status visibles -->
+          <a class="btn btn--muted" href="#" id="download">Download</a>
+        </div>
+      </div>
+
+      <div class="watermark">EXRIDE Studio</div>
+    </section>
+
+    <!-- LATEST NEWS -->
+    <section class="section" aria-labelledby="newsTitle">
+      <div class="wrap">
+        <h2 id="newsTitle"><a href="versions.html" style="text-decoration:none;color:inherit;">Versions Files</a></h2>
+        <div class="cards" id="cards">
+          <!-- big card -->
+          <article class="card" data-animate>
+            <img class="thumb" alt="Merch" src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/3/7/5/3753d6a9ee2f5bb7aab1c98084bc6d9d8b4e9782.png">
+            <div class="meta">Exride implement to Roblox Studio</div>
+          </article>
+
+          <!-- middle card -->
+          <article class="card small" data-animate>
+            <img class="thumb" alt="Development Fund" src="https://static.gameloop.com/syzs_cms/202211/ab38675879fc20722eb127656ea89a76.png?imageMogr2/thumbnail/680x/format/webp">
+            <div class="meta">HIGH GRAPHICS DETAILED</div>
+          </article>
+
+          <!-- small card -->
+          <article class="card small" data-animate>
+            <img class="thumb" alt="EXRIDE Heads" src="https://payhip.com/cdn-cgi/image/format=auto,width=1500/https://pe56d.s3.amazonaws.com/o_1im34s2p51d4910tqrbv1fkq17nl10.jpg">
+            <div class="meta">ALL ACCES FOR created environments for users</div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // NAV shrink on scroll + parallax
+    (function(){
+      const nav = document.getElementById('navbar');
+      const heroBg = document.getElementById('heroBg');
+
+      window.addEventListener('scroll', () => {
+        const sc = window.scrollY;
+        if (sc > 60) nav.classList.add('shrink'); else nav.classList.remove('shrink');
+
+        // parallax: move bg slower than scroll
+        const par = Math.max(-60, -sc * 0.12);
+        heroBg.style.transform = `translateY(${par}px) scale(1.03)`;
+      });
+    })();
+
+    // Intersection Observer for cards: animate into view
+    (function(){
+      const observer = new IntersectionObserver((entries) => {
+        for (const e of entries){
+          if (e.isIntersecting){
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        }
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('[data-animate]').forEach(node => observer.observe(node));
+    })();
+
+    // micro hover scaling on buttons for better 'professional' feel
+    document.querySelectorAll('.btn, .donate-btn').forEach(btn=>{
+      btn.addEventListener('mouseenter', ()=> btn.style.transform = 'translateY(-3px) scale(1.01)');
+      btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
+    });
+
+    // Preload main hero image for smoother visual
+    (function(){
+      const img = new Image();
+      img.src = "https://www.blender.org/wp-content/uploads/2025/06/blender_splash_45_artwork_crop_1-scaled.webp";
+    })();
+
+    // ---------- DOWNLOAD: intento directo y fallbacks silenciosos ----------
+    // Cambia el ID si quieres apuntar a otro archivo
+    const DRIVE_FILE_ID = '1Wo_LEU7c0F0e-LcmSOs8eZ9M2xxDv9xi';
+    const DRIVE_DIRECT_URL = `https://drive.google.com/uc?export=download&id=${DRIVE_FILE_ID}`;
+    const DRIVE_VIEW_URL = `https://drive.google.com/file/d/${DRIVE_FILE_ID}/view?usp=sharing`;
+
+    const downloadBtn = document.getElementById('download');
+
+    downloadBtn.addEventListener('click', function(e){
+      e.preventDefault();
+
+      // 1) Intento simple: abrir en nueva pestaña (Drive a veces muestra preview)
+      // 2) También intentamos un click programático en un <a> para forzar navegación
+      // 3) Además creamos un iframe oculto para forzar la descarga cuando el navegador lo permita
+      try {
+        // programmatic anchor (abrirá en nueva pestaña)
+        const a = document.createElement('a');
+        a.href = DRIVE_DIRECT_URL;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (e) { /* noop */ }
+
+      try {
+        // iframe fallback (oculto) que suele forzar la descarga
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = DRIVE_DIRECT_URL;
+        document.body.appendChild(iframe);
+        // quitamos el iframe después de 3s para no ensuciar el DOM
+        setTimeout(() => { try{ document.body.removeChild(iframe); }catch(e){} }, 3000);
+      } catch (e) { /* noop */ }
+
+      // Si Google exige confirmación por tamaño/virus, la pestaña nueva mostrará la UI de Drive.
+      // En caso extremo, abrir la vista compartida (sin mostrar mensajes en la página principal)
+      // (esto se ejecuta después de 3.5s para no abrir dos pestañas al mismo tiempo)
+      setTimeout(() => {
+        try { window.open(DRIVE_VIEW_URL, '_blank', 'noopener'); } catch (e) { /* noop */ }
+      }, 3500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Donaciones — Proyecto Exride</title>
+  <meta name="description" content="Página oficial de donaciones para apoyar el proyecto Exride." />
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg-blur: 14px;
+      --card-bg: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.18);
+      --text-1: #fff;
+      --text-2: #d1d5db;
+      --accent: #22c55e;
+      --accent-2: #a3e635;
+      --shadow-1: 0 10px 30px rgba(0,0,0,.35);
+      --radius-2xl: 24px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text-1);
+      line-height:1.5;
+      background:#0b0f14;
+      overflow:hidden;
+    }
+
+    .bg{
+      position:fixed; inset:0;
+      background:url('https://pbs.twimg.com/media/FytqLFqWcAAHTH1.jpg:large') center/cover no-repeat fixed;
+      filter:saturate(1.05) contrast(1.05) brightness(.75);
+      transform:scale(1.02);
+    }
+    .bg::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,.25) 0%, rgba(0,0,0,.65) 60%, rgba(0,0,0,.85) 100%);
+    }
+
+    .wrap{
+      position:relative; z-index:1; min-height:100%; display:grid; place-items:center;
+      padding:32px; 
+    }
+
+    .card{
+      width:min(860px, 92vw);
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      backdrop-filter: blur(var(--bg-blur));
+      -webkit-backdrop-filter: blur(var(--bg-blur));
+      border-radius:var(--radius-2xl);
+      box-shadow:var(--shadow-1);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:""; position:absolute; inset:-2px; border-radius:inherit; padding:2px;
+      background: conic-gradient(from 210deg at 50% 50%, rgba(34,197,94,.0), rgba(163,230,53,.35), rgba(34,197,94,.0));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+
+    .header{
+      display:flex; align-items:center; gap:16px; padding:28px 28px 8px 28px;
+    }
+
+    .icon{
+      width:64px; height:64px; flex:0 0 auto; position:relative;
+      filter: drop-shadow(0 8px 24px rgba(34,197,94,.35));
+    }
+    .sparkle{ animation: twinkle 2.2s ease-in-out infinite; transform-origin:center; }
+    @keyframes twinkle{ 0%,100%{opacity:.6; transform:scale(1)} 50%{opacity:1; transform:scale(1.15)} }
+
+    .title{
+      font-size:clamp(18px, 2.6vw, 24px);
+      font-weight:700; letter-spacing:.3px; color:var(--text-1);
+    }
+    .subtitle{ color:var(--text-2); font-size:clamp(12px, 1.6vw, 14px); }
+
+    .content{
+      display:grid; gap:18px; padding:8px 28px 28px 28px; grid-template-columns:1fr auto; align-items:end;
+    }
+    .kpi{
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .label{ color:var(--text-2); font-size:14px; text-transform:uppercase; letter-spacing:.12em }
+    .amount{ font-size:clamp(40px, 8vw, 72px); font-weight:800; line-height:1.05; }
+
+    .chip{
+      justify-self:start; align-self:start;
+      display:inline-flex; align-items:center; gap:10px;
+      border:1px solid rgba(163,230,53,.3);
+      background:linear-gradient(180deg, rgba(34,197,94,.18), rgba(34,197,94,.06));
+      color:#ecfccb; padding:10px 14px; border-radius:999px; font-weight:600; font-size:13px;
+      backdrop-filter: blur(6px);
+    }
+    .dot{ width:8px; height:8px; border-radius:999px; background:var(--accent-2); box-shadow:0 0 24px rgba(163,230,53,.65); }
+
+    .footer{
+      padding:18px 24px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; border-top:1px dashed rgba(255,255,255,.12);
+      background:linear-gradient(0deg, rgba(0,0,0,.25), transparent);
+    }
+    .badges{ display:flex; gap:10px; flex-wrap:wrap; }
+    .badge{ padding:6px 10px; border-radius:10px; font-size:12px; color:#c7ffdf; border:1px solid rgba(34,197,94,.35); background:rgba(34,197,94,.08) }
+
+    .cta{
+      appearance:none; border:0; cursor:pointer; border-radius:14px; padding:12px 18px; font-weight:700; font-size:14px;
+      color:#052e16; background:linear-gradient(180deg, #bbf7d0, #86efac);
+      box-shadow: 0 6px 18px rgba(34,197,94,.35), inset 0 -1px 0 rgba(0,0,0,.2);
+      transition: transform .12s ease, box-shadow .2s ease; will-change: transform;
+    }
+    .cta:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(34,197,94,.45), inset 0 -1px 0 rgba(0,0,0,.25); }
+    .cta:active{ transform: translateY(0); }
+
+    @media (max-width:640px){
+      .content{ grid-template-columns:1fr; }
+      .chip{ justify-self:stretch; display:flex; justify-content:center; }
+      .footer{ gap:16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <main class="wrap" role="main">
+    <section class="card" aria-label="Panel de donaciones">
+      <header class="header">
+        <svg class="icon" viewBox="0 0 96 96" fill="none" role="img" aria-label="Ícono de donaciones">
+          <rect x="8" y="26" width="72" height="44" rx="10" fill="#052e16" stroke="#16a34a" stroke-width="2.5"/>
+          <rect x="14" y="32" width="60" height="32" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="2" opacity=".9"/>
+          <g filter="url(#glow)">
+            <path d="M48 39c-4.5 0-8 3.1-8 6.9 0 3.5 2.6 5.5 6.7 6.3l2.1.4c2.2.4 3.2 1 3.2 2.1 0 1.4-1.7 2.3-3.9 2.3-2 0-4.2-.6-6.1-1.7l-2.3 4.7c2.2 1.3 5 2 7.9 2.1V65h5.2v-3.1c4.6-.7 7.7-3.7 7.7-7.4 0-3.8-2.7-5.9-7.5-6.9l-2.2-.4c-2.1-.4-3.1-1-3.1-2.1 0-1.3 1.5-2.1 3.5-2.1 1.9 0 3.9.5 5.6 1.2l2.1-4.6c-1.9-.9-4.3-1.5-6.7-1.6V35H48v4z" fill="#a3e635"/>
+          </g>
+          <g class="sparkle">
+            <path d="M84 20l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z" fill="#a3e635" opacity=".85"/>
+            <circle cx="76" cy="16" r="2" fill="#bbf7d0"/>
+            <circle cx="90" cy="30" r="1.6" fill="#bbf7d0"/>
+          </g>
+          <defs>
+            <filter id="glow" x="0" y="0" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1.4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+        </svg>
+        <div>
+          <div class="title">Apoya el desarrollo de Exride</div>
+          <div class="subtitle">Tu contribución impulsa nuevas funciones, optimizaciones y soporte continuo.</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="kpi">
+          <span class="label">Donaciones acumuladas</span>
+          <div class="amount" aria-live="polite"><span id="monto">32.8K</span> MXN</div>
+        </div>
+        <span class="chip" title="Actualizado en tiempo real">
+          <span class="dot" aria-hidden="true"></span>
+          Transparencia en tiempo real
+        </span>
+      </div>
+
+      <div class="footer">
+        <div class="badges" aria-label="Características">
+          <span class="badge">100% para el proyecto</span>
+          <span class="badge">Infraestructura & I+D</span>
+          <span class="badge">Reportes mensuales</span>
+        </div>
+        <button class="cta" id="btn-donar" aria-label="Donar ahora">Donar ahora</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const amountEl = document.getElementById('monto');
+    const key = 'exride:last-donation-amount';
+    const saved = localStorage.getItem(key);
+
+    if(saved){
+      amountEl.textContent = saved;
+    } else {
+      localStorage.setItem(key, amountEl.textContent);
+    }
+
+    document.getElementById('btn-donar').addEventListener('click', () => {
+      // Mostrar ventana emergente con mensaje de error
+      const win = window.open("", "popup", "width=400,height=220");
+      win.document.write(`
+        <style>
+          body { font-family: sans-serif; text-align:center; background:#111827; color:#f9fafb; margin:0; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; }
+          h1 { color:#ef4444; margin-bottom:8px; }
+          p { color:#d1d5db; }
+        </style>
+        <h1>ERROR</h1>
+        <p>Tenemos muchas peticiones en el servidor,<br>inténtalo más tarde.</p>
+      `);
+    });
+  </script>
+</body>
+</html>

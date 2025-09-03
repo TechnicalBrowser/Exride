@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ExShop - Fort Hansberg</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1113; --panel:#121214; --muted:#9aa0a6; --accent:#00b0ff; --card:#171819; --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#0b0c0d 0%, #0f1113 100%);color:#e6eef6}
+    .wrap{max-width:1200px;margin:28px auto;padding:20px;display:grid;grid-template-columns:1fr 350px;gap:28px}
+
+    .left{display:flex;flex-direction:column;gap:16px}
+    .title{font-size:34px;font-weight:800;letter-spacing:-0.02em}
+    .meta{color:var(--muted);display:flex;gap:16px;align-items:center}
+
+    .gallery{background:var(--panel);padding:18px;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.6)}
+
+    /* MAIN VIEW: force a horizontal aspect ratio (16:9). This crops vertical images so viewer is always horizontal */
+    .main-image{width:100%;aspect-ratio:16/9;max-height:540px;border-radius:8px;overflow:hidden;position:relative;background:#0b0b0b;display:flex;align-items:center;justify-content:center}
+
+    /* ensure embedded media always fill and are cropped to horizontal */
+    .main-image img, .main-image iframe, .main-image video{width:100%;height:100%;object-fit:cover;object-position:center;border-radius:6px;display:block}
+
+    /* thumbs: also force horizontal crop (wider thumbnails) */
+    .thumb-row{display:flex;gap:10px;margin-top:12px;align-items:center}
+    .thumb{width:160px;aspect-ratio:16/9;border-radius:6px;overflow:hidden;cursor:pointer;flex:0 0 auto;border:2px solid transparent;position:relative}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb.active{border-color:rgba(255,255,255,0.12)}
+
+    .right{display:flex;flex-direction:column;gap:14px}
+    .card{background:var(--card);padding:18px;border-radius:10px}
+    .logo{height:72px;display:flex;align-items:center;justify-content:center}
+    .esrb{border-radius:8px;padding:12px;background:var(--glass);color:var(--muted);display:inline-block}
+    .price{font-size:18px;font-weight:700;margin-top:8px}
+    .btn{display:block;padding:12px 14px;border-radius:8px;text-align:center;font-weight:600;cursor:pointer}
+    .btn-primary{background:linear-gradient(180deg,#14a9ff,#039be5);color:#002330;border:none}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .meta-list{display:grid;gap:8px;margin-top:6px;color:var(--muted)}
+
+    /* small play indicator on video thumbnail */
+    .thumb .play-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;font-size:20px;color:rgba(255,255,255,0.95)}
+
+    @media (max-width:1000px){.wrap{grid-template-columns:1fr;padding:12px}.main-image{max-height:420px}.thumb{width:120px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="left">
+      <div>
+        <div class="title">Fort Hansberg</div>
+        <div class="meta">★ ★ ★ ★ ☆ &nbsp;&nbsp; 4.0 &nbsp;&nbsp; • &nbsp;&nbsp;ExartonRbxl</div>
+      </div>
+
+      <div class="gallery card">
+        <div class="main-image" id="mainImageContainer">
+          <!-- default: show screenshot01 as horizontal (container forces 16:9 crop) -->
+          <img id="mainImage" src="https://tr.rbxcdn.com/180DAY-42a328630a78d98496ea29a03af98959/768/432/Image/Webp/noFilter" alt="Screenshot 01">
+        </div>
+
+        <div class="thumb-row" id="thumbRow">
+          <div class="thumb active" data-type="image" data-src="https://tr.rbxcdn.com/180DAY-42a328630a78d98496ea29a03af98959/768/432/Image/Webp/noFilter" tabindex="0"><img src="https://tr.rbxcdn.com/180DAY-42a328630a78d98496ea29a03af98959/768/432/Image/Webp/noFilter" alt="thumb1"></div>
+          <div class="thumb" data-type="image" data-src="Screenshot0002.png" tabindex="0"><img src="Screenshot0002.png" alt="thumb2"></div>
+          <div class="thumb" data-type="video" data-src="miniature3.png" tabindex="0" style="position:relative"><img src="miniature3.png" alt="thumb3"><span class="play-dot">▶</span></div>
+        </div>
+      </div>
+
+      <p style="color:var(--muted);font-size:14px;margin-top:6px">a testing upload for me :V</p>
+    </div>
+
+    <aside class="right">
+      <div class="card">
+        <div class="logo"><img src="logo.png" alt="Keylocker logo" style="height:60px;object-fit:contain"></div>
+        <div style="margin-top:8px"><span class="esrb">DEMO</span></div>
+        <div class="price">FREE</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+          <button id="downloadBtn" class="btn btn-primary">Download</button>
+          <button id="statusBtn" class="btn btn-ghost">Not acquired</button>
+          <button class="btn btn-ghost">Add to Wishlist</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:8px">Details</div>
+        <div class="meta-list">
+          <div><strong>Developer:</strong> ExartonRbxl</div>
+          <div><strong>Publisher:</strong> WebPage Default</div>
+          <div><strong>Release Date:</strong> 01/09/2025</div>
+          <div><strong>Asset:</strong> Place File</div>
+          <div><strong>Size File:</strong> 5.1 MB</div>
+          <div><strong>Copyright:</strong> Free Use</div>
+          <div><strong>Last verion:</strong> 0.411</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div id="overlayRoot"></div>
+
+  <script>
+    // VIDEO: preview URL inserted directly into main viewer when video thumb clicked
+    const VIDEO_PREVIEW = 'https://drive.google.com/file/d/1MulNWVOLkIiLPT2znuwgCyjdrqq9dneu/preview';
+
+    const thumbRow = document.getElementById('thumbRow');
+    const thumbs = thumbRow.querySelectorAll('.thumb');
+    const mainImageContainer = document.getElementById('mainImageContainer');
+
+    function setActiveThumb(el){
+      thumbs.forEach(t=>t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function showImage(src){
+      mainImageContainer.innerHTML = '';
+      const img = document.createElement('img');
+      img.id = 'mainImage';
+      img.src = src;
+      img.alt = 'Main screenshot';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.style.objectPosition = 'center';
+      mainImageContainer.appendChild(img);
+    }
+
+    function showVideoInMain(previewUrl){
+      mainImageContainer.innerHTML = '';
+      const iframe = document.createElement('iframe');
+      iframe.src = previewUrl;
+      iframe.frameBorder = '0';
+      iframe.allow = 'autoplay; encrypted-media; fullscreen';
+      iframe.allowFullscreen = true;
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.display = 'block';
+      mainImageContainer.appendChild(iframe);
+    }
+
+    thumbs.forEach(t=>{
+      t.addEventListener('click', ()=>{
+        const type = t.dataset.type;
+        const src = t.dataset.src;
+        setActiveThumb(t);
+        if(type === 'image'){
+          showImage(src);
+        } else if(type === 'video'){
+          // embed the drive preview directly into the main viewer (as requested)
+          showVideoInMain(VIDEO_PREVIEW);
+        }
+      });
+
+      // keyboard support
+      t.addEventListener('keydown',(e)=>{ if(e.key==='Enter' || e.key===' ') t.click(); });
+    });
+
+    // Download & acquisition logic
+    const downloadBtn = document.getElementById('downloadBtn');
+    const statusBtn = document.getElementById('statusBtn');
+
+    // Initialize status from localStorage
+    const acquired = localStorage.getItem('acquired') === 'true';
+    if(acquired){
+      statusBtn.textContent = 'Acquired';
+    }
+
+    downloadBtn.addEventListener('click', ()=>{
+      // Trigger file download
+      const link = document.createElement('a');
+      link.href = 'Fort Hansberg.rbxl';
+      link.download = 'Fort Hansberg.rbxl';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Update status
+      statusBtn.textContent = 'Acquired';
+      localStorage.setItem('acquired','true');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Exride — XDR2025</title>
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --card:#0f1720;
+      --muted:#9aa3ad;
+      --accent:#6ee7b7;
+      --glass: rgba(255,255,255,0.03);
+      font-size:16px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: linear-gradient(180deg,#071022 0%, #07101a 100%); color:#e6eef6}
+    .wrap{max-width:900px;margin:40px auto;padding:20px}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#0ea5a9,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:#021;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    .site-title{font-size:18px;font-weight:600}
+    .site-sub{color:var(--muted);font-size:13px}
+
+    .post-card{background:var(--card);border-radius:12px;padding:22px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .post-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .post-info{display:flex;gap:12px;align-items:center}
+    .author{display:flex;gap:10px;align-items:center}
+    .avatar{width:44px;height:44px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700}
+    h1.post-title{margin:0;font-size:20px}
+    p.subtitle{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+    .post-content{line-height:1.65;color:#d6e7fb;margin-top:14px}
+    .post-content ul{margin-left:18px}
+    .versions{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:8px;margin-top:14px;border:1px solid rgba(255,255,255,0.02)}
+
+    .actions{display:flex;gap:10px;margin-top:18px}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--accent);cursor:pointer}
+    .btn.secondary{color:var(--muted)}
+
+    footer{margin-top:26px;color:var(--muted);font-size:13px}
+
+    @media (max-width:520px){.wrap{padding:12px;margin:20px}.post-meta{flex-direction:column;align-items:flex-start;gap:10px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">EX</div>
+      <div>
+        <div class="site-title">Exride Official Forum</div>
+        <div class="site-sub">Official announcements • English</div>
+      </div>
+    </header>
+
+    <article class="post-card">
+      <div class="post-meta">
+        <div class="post-info">
+          <div class="author">
+            <div class="avatar">E</div>
+            <div>
+              <div style="font-weight:600">Exride Team</div>
+              <div style="font-size:12px;color:var(--muted)">Posted on September 7, 2025</div>
+            </div>
+          </div>
+        </div>
+        <div style="color:var(--muted);font-size:13px">Category: Announcements</div>
+      </div>
+
+      <h1 class="post-title">Recent progress and upcoming releases</h1>
+      <p class="subtitle">A summary of updates, standalone version packs, and the upcoming Exride 4.0.0 release.</p>
+
+      <div class="post-content">
+        <p>
+          In recent days, we have been testing new methods to roll out natively meaningful updates within the Exride tool. We’ve launched the forums page on the official site, and introduced new templates featuring very high-fidelity graphics with lighting pre-adjusted so creators can experiment with visuals right away. We’ve also improved the application’s optimization. Going forward, the store page will only be available inside the application and will no longer be hosted as a public web page.
+        </p>
+
+        <h3 style="margin-top:14px">Standalone versions</h3>
+        <p>
+          We’ve added standalone version packs. Standalone versions are packages you must install before creating a new project; they provide the assets used by templates. These packs will include free asset packs and many open-source files for experiences and more. The packs are generation-based, meaning they are produced according to generation tiers rather than being hand-made individually.
+        </p>
+
+        <div class="versions">
+          <strong>Examples:</strong>
+          <ul>
+            <li><strong>ExrideGen 1.0.0</strong> — Includes map files with low graphics and a small selection of maps.</li>
+            <li><strong>ExrideGen 1.5.0</strong> — Includes map files with improved graphics, much larger maps, and more advanced features.</li>
+            <li><strong>ExrideGen 2.0.0</strong> — Includes 4K map files, high-detail graphics, extremely large maps, and enhanced graphics technology provided by Exride. This pack also enables automatic graphics improvements each time you create a project and includes advanced enhancements.</li>
+          </ul>
+        </div>
+
+        <p style="margin-top:12px">
+          These new features are scheduled to arrive at the end of September, alongside additional site optimization improvements.
+        </p>
+
+        <p>
+          Exride 4.0.0 will also be released as a major update featuring a brand-new UI built from the ground up, improved animations, a cleaner and more modern visual style, and further application optimizations. <strong>Available: September 15, 2025.</strong>
+        </p>
+
+        <div class="actions">
+          <button class="btn" id="likeBtn">Like</button>
+          <button class="btn secondary" id="shareBtn">Share</button>
+        </div>
+
+      </div>
+
+      <footer>
+        <div>Was this post helpful? Click Like or Share to let us know.</div>
+      </footer>
+    </article>
+
+  </div>
+
+  <script>
+    // Simple interactions
+    const likeBtn = document.getElementById('likeBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    let liked = false;
+    likeBtn.addEventListener('click', ()=>{
+      liked = !liked;
+      likeBtn.textContent = liked ? 'Liked ✓' : 'Like';
+      likeBtn.style.opacity = liked ? '0.9' : '1';
+    });
+
+    shareBtn.addEventListener('click', ()=>{
+      if(navigator.share){
+        navigator.share({title: 'Exride — Recent progress', text: 'Check out the Exride announcement on the official forum.', url: window.location.href}).catch(()=>{});
+      } else {
+        alert('Copy the page URL to share.');
+      }
+    });
+  </script>
+</body>
+</html>

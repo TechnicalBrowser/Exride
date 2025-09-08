@@ -262,6 +262,10 @@
     </div>
 
     <div class="nav-right">
+      <!-- EXRIDE FORUMS: añadido -->
+      <a class="btn btn--muted" href="exrideforums.html" id="forumsBtn" aria-label="ExRide Forums">ExRide Forums</a>
+
+      <!-- Donate -->
       <a class="donate-btn" href="#" aria-label="Donate"><span style="font-size:14px">❤</span> Donate</a>
     </div>
   </header>
@@ -397,6 +401,14 @@
         try { window.open(DRIVE_VIEW_URL, '_blank', 'noopener'); } catch (e) { /* noop */ }
       }, 3500);
     });
+
+    // Optional: pequeño listener para el botón de foros si quieres comportamiento extra
+    const forumsBtn = document.getElementById('forumsBtn');
+    if (forumsBtn) {
+      forumsBtn.addEventListener('click', () => {
+        // por ahora solo navega al href normal; si quieres tracking o UI, lo puedes añadir aquí
+      });
+    }
   </script>
 </body>
 </html>
